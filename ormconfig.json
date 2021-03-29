@@ -1,0 +1,12 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "root",
+  "password": "password",
+  "database": "group_manager",
+  "entities": ["dist/entities/**/*.entity.js"],
+  "migrations": ["dist/migrations/**/*.js"],
+  "logging": true,
+  "synchronize": false
+}

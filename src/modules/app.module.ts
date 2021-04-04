@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 // import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
-import { UserModule } from './modules/user.module';
+import { UserModule } from './user.module';
 
 @Module({
   imports: [

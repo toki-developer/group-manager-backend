@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AddUserDto } from 'src/dto/user.dto';
 import { UserModel } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';
@@ -8,9 +8,9 @@ import { UserService } from 'src/services/user.service';
 export class UserResolver {
   constructor(@Inject(UserService) private userService: UserService) {}
 
-  @Query((returns) => [UserModel])
-  async users() {
-    return await this.userService.findAll();
+  @Query((returns) => UserModel, { nullable: true })
+  async user(@Args('id', { type: () => ID }) id: number) {
+    return await this.userService.findOne(id);
   }
 
   @Mutation((returns) => UserModel)

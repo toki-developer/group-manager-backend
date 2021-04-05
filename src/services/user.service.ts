@@ -11,8 +11,8 @@ export class UserService {
     private userRepository: Repository<UserModel>,
   ) {}
 
-  async findAll() {
-    return this.userRepository.find();
+  async findOne(id: number) {
+    return this.userRepository.findOne(id);
   }
 
   async save(user: AddUserDto) {

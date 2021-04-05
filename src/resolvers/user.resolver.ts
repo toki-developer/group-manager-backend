@@ -1,16 +1,20 @@
-import { Args, Int, Query, Resolver } from '@nestjs/graphql';
+import { Inject } from '@nestjs/common';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { AddUserDto } from 'src/dto/user.dto';
 import { UserModel } from 'src/models/user.model';
+import { UserService } from 'src/services/user.service';
 
 @Resolver(() => UserModel)
 export class UserResolver {
-  readonly userMaps = new Map<number, UserModel>([
-    [1, { id: 1, name: 'hige', iconUrl: 'hoge' }],
-    [2, { id: 2, name: 'sample', iconUrl: 'user' }],
-    [3, { id: 3, name: 'sample', iconUrl: 'hoge' }],
-  ]);
+  constructor(@Inject(UserService) private userService: UserService) {}
 
-  @Query(() => UserModel)
-  async author(@Args('id', { type: () => Int }) id: number) {
-    return this.userMaps.get(id);
+  @Query((returns) => [UserModel])
+  async users() {
+    return await this.userService.findAll();
+  }
+
+  @Mutation((returns) => UserModel)
+  async saveUser(@Args('user') user: AddUserDto) {
+    return await this.userService.save(user);
   }
 }

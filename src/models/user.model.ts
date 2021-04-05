@@ -1,5 +1,11 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @ObjectType()
 @Entity('user')
@@ -14,4 +20,12 @@ export class UserModel {
 
   @Field({ nullable: true })
   iconUrl?: string;
+
+  @Field()
+  @CreateDateColumn()
+  readonly createdAt?: Date;
+
+  @Field()
+  @UpdateDateColumn()
+  readonly updatedAt?: Date;
 }

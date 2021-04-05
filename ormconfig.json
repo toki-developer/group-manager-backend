@@ -5,7 +5,7 @@
   "username": "root",
   "password": "password",
   "database": "group_manager",
-  "entities": ["dist/entities/**/*.entity.js"],
+  "entities": ["dist/models/*.model.js"],
   "migrations": ["dist/migrations/**/*.js"],
   "logging": true,
   "synchronize": false

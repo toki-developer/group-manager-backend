@@ -1,4 +1,4 @@
-##セットアップ
+## セットアップ
 
 ```
 # dbの起動
@@ -8,5 +8,5 @@ docker-compose up -d
 yarn
 
 # 開発環境の起動
-yarn dev
+yarn run start
 ```

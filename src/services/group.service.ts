@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddGroupDto } from 'src/dto/group.dto';
 import { GroupModel } from 'src/models/group.model';
-import { Repository } from 'typeorm';
+import { createConnection, createQueryBuilder, Repository } from 'typeorm';
 
 @Injectable()
 export class GroupService {

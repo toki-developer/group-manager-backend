@@ -18,16 +18,16 @@ export class UserModel {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field({ nullable: false })
-  @Column()
+  @Field()
+  @Column({ nullable: false })
   name: string;
 
-  @Field({ nullable: false })
-  @Column()
+  @Field()
+  @Column({ nullable: false })
   @IsEmail()
   email: string;
 
-  @Field({ nullable: true })
+  @Field()
   @Column({ nullable: true })
   iconUrl?: string;
 

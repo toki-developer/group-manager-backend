@@ -17,15 +17,17 @@ export class GroupModel {
   @PrimaryGeneratedColumn()
   readonly id: number;
 
-  @Field({ nullable: false })
-  @Column()
+  @Field()
+  @Column({ nullable: false })
   name: string;
 
-  @Field({ nullable: true })
+  @Field()
   @Column({ nullable: true })
   iconUrl?: string;
 
-  @ManyToMany((type) => UserModel, (user) => user.id)
+  @ManyToMany((type) => UserModel, (user) => user.id, {
+    cascade: true,
+  })
   users?: UserModel[];
 
   @Field()

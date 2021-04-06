@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { group } from 'node:console';
+import { truncate } from 'node:fs';
 import { addGroupByUserDto, AddUserDto } from 'src/dto/user.dto';
 import { GroupModel } from 'src/models/group.model';
 import { UserModel } from 'src/models/user.model';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -39,5 +40,16 @@ export class UserService {
       where: { id: id },
     });
     return user.groups;
+  }
+
+  async findUserByGroup(id: number): Promise<UserModel[] | null> {
+    const allUsers = await this.userRepository.find({
+      relations: ['groups'],
+    });
+    const users = allUsers.filter((user) => {
+      const u = user.groups.filter((group) => group.id == id);
+      if (u.length > 0) return true;
+    });
+    return users;
   }
 }

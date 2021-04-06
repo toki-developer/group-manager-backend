@@ -28,4 +28,9 @@ export class UserResolver {
   async groupsByUser(@Args('id', { type: () => ID }) id: number) {
     return await this.userService.findGroupByUser(id);
   }
+
+  @Query((returns) => [UserModel], { nullable: true })
+  async usersByGroup(@Args('id', { type: () => ID }) id: number) {
+    return await this.userService.findUserByGroup(id);
+  }
 }

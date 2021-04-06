@@ -6,7 +6,7 @@ type UserModel {
   id: Int!
   name: String!
   email: String!
-  iconUrl: String
+  iconUrl: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -19,7 +19,7 @@ scalar DateTime
 type GroupModel {
   id: Int!
   name: String!
-  iconUrl: String
+  iconUrl: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -27,6 +27,7 @@ type GroupModel {
 type Query {
   user(id: ID!): UserModel
   groupsByUser(id: ID!): [GroupModel!]
+  usersByGroup(id: ID!): [UserModel!]
   group(id: ID!): GroupModel
 }
 

@@ -4,4 +4,6 @@ import { Field, InputType } from '@nestjs/graphql';
 export class AddGroupDto {
   @Field()
   name: string;
+  @Field()
+  iconUrl?: string;
 }

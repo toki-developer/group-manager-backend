@@ -1,8 +1,11 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { UserModel } from 'src/models/user.model';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -12,14 +15,18 @@ import {
 export class GroupModel {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
-  id: number;
+  readonly id: number;
 
-  @Field({ nullable: true })
+  @Field({ nullable: false })
   @Column()
   name: string;
 
   @Field({ nullable: true })
+  @Column({ nullable: true })
   iconUrl?: string;
+
+  @ManyToMany((type) => UserModel, (user) => user.id)
+  users?: UserModel[];
 
   @Field()
   @CreateDateColumn()

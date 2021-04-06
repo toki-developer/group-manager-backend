@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AddUserDto } from 'src/dto/user.dto';
+import { addGroupByUserDto, AddUserDto } from 'src/dto/user.dto';
+import { GroupModel } from 'src/models/group.model';
 import { UserModel } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';
 
@@ -16,5 +17,15 @@ export class UserResolver {
   @Mutation((returns) => UserModel)
   async saveUser(@Args('user') user: AddUserDto) {
     return await this.userService.save(user);
+  }
+
+  @Mutation((returns) => UserModel)
+  async addGroupByUser(@Args('affiliation') affiliation: addGroupByUserDto) {
+    return await this.userService.addGroupByUser(affiliation);
+  }
+
+  @Query((returns) => [GroupModel], { nullable: true })
+  async groupsByUser(@Args('id', { type: () => ID }) id: number) {
+    return await this.userService.findGroupByUser(id);
   }
 }

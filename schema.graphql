@@ -4,8 +4,9 @@
 
 type UserModel {
   id: Int!
-  name: String
-  iconUrl: String
+  name: String!
+  email: String!
+  iconUrl: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -15,14 +16,39 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type GroupModel {
+  id: Int!
+  name: String!
+  iconUrl: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
-  users: [UserModel!]!
+  user(id: ID!): UserModel
+  groupsByUser(id: ID!): [GroupModel!]
+  usersByGroup(id: ID!): [UserModel!]
+  group(id: ID!): GroupModel
 }
 
 type Mutation {
   saveUser(user: AddUserDto!): UserModel!
+  addGroupByUser(affiliation: addGroupByUserDto!): UserModel!
+  saveGroup(group: AddGroupDto!): GroupModel!
 }
 
 input AddUserDto {
   name: String!
+  email: String!
+  iconUrl: String!
+}
+
+input addGroupByUserDto {
+  userId: Float!
+  groupId: Float!
+}
+
+input AddGroupDto {
+  name: String!
+  iconUrl: String!
 }

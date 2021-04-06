@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { UserModule } from './user.module';
+import { GroupModule } from 'src/modules/group.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { UserModule } from './user.module';
     }),
     TypeOrmModule.forRoot(),
     UserModule,
+    GroupModule,
   ],
   // controllers: [AppController],
   // providers: [AppService],

@@ -1,6 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { IsEmail } from 'class-validator';
-import { GroupModel } from 'src/models/group.model';
+import { UserModel } from 'src/models/user.model';
 import {
   Column,
   CreateDateColumn,
@@ -12,30 +11,24 @@ import {
 } from 'typeorm';
 
 @ObjectType()
-@Entity('user')
-export class UserModel {
+@Entity('group')
+export class GroupModel {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
-  id: number;
+  readonly id: number;
 
   @Field()
   @Column({ nullable: false })
   name: string;
 
   @Field()
-  @Column({ nullable: false })
-  @IsEmail()
-  email: string;
-
-  @Field()
   @Column({ nullable: true })
   iconUrl?: string;
 
-  @ManyToMany((type) => GroupModel, (group) => group.id, {
+  @ManyToMany((type) => UserModel, (user) => user.id, {
     cascade: true,
   })
-  @JoinTable()
-  groups?: GroupModel[];
+  users?: UserModel[];
 
   @Field()
   @CreateDateColumn()

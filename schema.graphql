@@ -25,10 +25,10 @@ type GroupModel {
 }
 
 type Query {
-  user(id: ID!): UserModel
-  groupsByUser(id: ID!): [GroupModel!]
-  usersByGroup(id: ID!): [UserModel!]
-  group(id: ID!): GroupModel
+  user(id: Int!): UserModel
+  groupsByUser(id: Int!): [GroupModel!]
+  usersByGroup(id: Int!): [UserModel!]
+  group(id: Int!): GroupModel
 }
 
 type Mutation {

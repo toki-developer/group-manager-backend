@@ -10,7 +10,7 @@ export class GroupResolver {
   constructor(@Inject(GroupService) private groupService: GroupService) {}
 
   @Query((returns) => GroupModel, { nullable: true })
-  async group(@Args('id', { type: () => ID }) id: number) {
+  async group(@Args('id', { type: () => Int }) id: number) {
     return await this.groupService.findOne(id);
   }
 

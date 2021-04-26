@@ -16,7 +16,5 @@ import { GroupModule } from 'src/modules/group.module';
     UserModule,
     GroupModule,
   ],
-  // controllers: [AppController],
-  // providers: [AppService],
 })
 export class AppModule {}

@@ -34,7 +34,7 @@ type Query {
 type Mutation {
   saveUser(user: AddUserDto!): UserModel!
   addGroupByUser(affiliation: addGroupByUserDto!): UserModel!
-  saveGroup(group: AddGroupDto!): GroupModel!
+  saveGroup(group: AddGroupDto!, id: Int!): GroupModel!
 }
 
 input AddUserDto {

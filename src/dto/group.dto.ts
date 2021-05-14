@@ -7,3 +7,13 @@ export class AddGroupDto {
   @Field()
   iconUrl?: string;
 }
+
+@InputType()
+export class UpdateGroupDto {
+  @Field()
+  id: number;
+  @Field()
+  name: string;
+  @Field()
+  iconUrl?: string;
+}

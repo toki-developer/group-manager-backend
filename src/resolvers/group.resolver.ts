@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AddGroupDto } from 'src/dto/group.dto';
+import { AddGroupDto, UpdateGroupDto } from 'src/dto/group.dto';
 import { GroupModel } from 'src/models/group.model';
 import { UserModel } from 'src/models/user.model';
 import { GroupService } from 'src/services/group.service';
@@ -15,10 +15,12 @@ export class GroupResolver {
   }
 
   @Mutation((returns) => GroupModel)
-  async saveGroup(
-    @Args('id', { type: () => Int }) id: number,
-    @Args('group') group: AddGroupDto,
-  ) {
+  async saveGroup(@Args('id') id: string, @Args('group') group: AddGroupDto) {
     return await this.groupService.save(id, group);
+  }
+
+  @Mutation((returns) => GroupModel)
+  async updateGroup(@Args('group') group: UpdateGroupDto) {
+    return await this.groupService.update(group);
   }
 }

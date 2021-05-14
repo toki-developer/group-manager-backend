@@ -3,12 +3,11 @@
 # ------------------------------------------------------
 
 type UserModel {
-  id: Int!
+  id: String!
   name: String!
-  email: String!
   iconUrl: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 """
@@ -25,8 +24,8 @@ type GroupModel {
 }
 
 type Query {
-  user(id: Int!): UserModel
-  groupsByUser(id: Int!): [GroupModel!]
+  user(id: String!): UserModel
+  groupsByUser(id: String!): [GroupModel!]
   usersByGroup(id: Int!): [UserModel!]
   group(id: Int!): GroupModel
 }
@@ -34,21 +33,28 @@ type Query {
 type Mutation {
   saveUser(user: AddUserDto!): UserModel!
   addGroupByUser(affiliation: addGroupByUserDto!): UserModel!
-  saveGroup(group: AddGroupDto!, id: Int!): GroupModel!
+  saveGroup(group: AddGroupDto!, id: String!): GroupModel!
+  updateGroup(group: UpdateGroupDto!): GroupModel!
 }
 
 input AddUserDto {
+  id: String!
   name: String!
-  email: String!
   iconUrl: String!
 }
 
 input addGroupByUserDto {
-  userId: Float!
+  userId: String!
   groupId: Float!
 }
 
 input AddGroupDto {
+  name: String!
+  iconUrl: String!
+}
+
+input UpdateGroupDto {
+  id: Float!
   name: String!
   iconUrl: String!
 }

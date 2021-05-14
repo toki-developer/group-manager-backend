@@ -10,7 +10,7 @@ export class UserResolver {
   constructor(@Inject(UserService) private userService: UserService) {}
 
   @Query((returns) => UserModel, { nullable: true })
-  async user(@Args('id', { type: () => Int }) id: number) {
+  async user(@Args('id') id: string) {
     return await this.userService.findOne(id);
   }
 
@@ -25,7 +25,7 @@ export class UserResolver {
   }
 
   @Query((returns) => [GroupModel], { nullable: true })
-  async groupsByUser(@Args('id', { type: () => Int }) id: number) {
+  async groupsByUser(@Args('id') id: string) {
     return await this.userService.findGroupByUser(id);
   }
 

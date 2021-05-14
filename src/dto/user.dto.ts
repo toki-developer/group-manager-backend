@@ -3,9 +3,9 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class AddUserDto {
   @Field()
-  name: string;
+  id: string;
   @Field()
-  email: string;
+  name: string;
   @Field()
   iconUrl?: string;
 }
@@ -13,7 +13,7 @@ export class AddUserDto {
 @InputType()
 export class addGroupByUserDto {
   @Field()
-  userId: number;
+  userId: string;
   @Field()
   groupId: number;
 }

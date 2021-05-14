@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { IsEmail } from 'class-validator';
 import { GroupModel } from 'src/models/group.model';
 import {
@@ -7,25 +7,20 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @ObjectType()
 @Entity('user')
 export class UserModel {
-  @Field(() => Int)
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Field()
+  @PrimaryColumn()
+  id: string;
 
   @Field()
   @Column({ nullable: false })
   name: string;
-
-  @Field()
-  @Column({ nullable: false })
-  @IsEmail()
-  email: string;
 
   @Field()
   @Column({ nullable: true })
@@ -37,11 +32,11 @@ export class UserModel {
   @JoinTable()
   groups?: GroupModel[];
 
-  @Field()
+  @Field({ nullable: true })
   @CreateDateColumn()
   readonly createdAt?: Date;
 
-  @Field()
+  @Field({ nullable: true })
   @UpdateDateColumn()
   readonly updatedAt?: Date;
 }

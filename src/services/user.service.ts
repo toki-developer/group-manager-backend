@@ -16,7 +16,7 @@ export class UserService {
     private groupRepository: Repository<GroupModel>,
   ) {}
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return this.userRepository.findOne(id);
   }
 
@@ -34,7 +34,7 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  async findGroupByUser(id: number): Promise<GroupModel[] | null> {
+  async findGroupByUser(id: string): Promise<GroupModel[] | null> {
     const user = await this.userRepository.findOne({
       relations: ['groups'],
       where: { id: id },

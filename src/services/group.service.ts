@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AddGroupDto } from 'src/dto/group.dto';
+import { AddGroupDto, UpdateGroupDto } from 'src/dto/group.dto';
 import { GroupModel } from 'src/models/group.model';
 import { UserService } from 'src/services/user.service';
 import { createConnection, createQueryBuilder, Repository } from 'typeorm';
@@ -17,9 +17,14 @@ export class GroupService {
     return this.groupRepository.findOne(id);
   }
 
-  async save(id: number, group: AddGroupDto) {
+  async save(id: string, group: AddGroupDto) {
     const newgroup = await this.groupRepository.save(group);
     this.userService.addGroupByUser({ userId: id, groupId: newgroup.id });
+    return newgroup;
+  }
+
+  async update(group: UpdateGroupDto) {
+    const newgroup = await this.groupRepository.save(group);
     return newgroup;
   }
 }

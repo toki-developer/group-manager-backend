@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { group } from 'node:console';
 import { truncate } from 'node:fs';
+import { identity } from 'rxjs';
 import { addGroupByUserDto, AddUserDto } from 'src/dto/user.dto';
 import { GroupModel } from 'src/models/group.model';
 import { UserModel } from 'src/models/user.model';
@@ -17,7 +18,17 @@ export class UserService {
   ) {}
 
   async findOne(id: string) {
-    return this.userRepository.findOne(id);
+    const user = await this.userRepository.findOne(id);
+    if (user == undefined) {
+      const addUserDto = {
+        id: id,
+        name: '',
+        iconUrl: '',
+      };
+      const newUser = this.userRepository.save(addUserDto);
+      return newUser;
+    }
+    return user;
   }
 
   async save(user: AddUserDto) {

@@ -50,7 +50,7 @@ export class UserService {
       relations: ['groups'],
       where: { id: id },
     });
-    return user.groups;
+    return user?.groups;
   }
 
   async findUserByGroup(id: number): Promise<UserModel[] | null> {

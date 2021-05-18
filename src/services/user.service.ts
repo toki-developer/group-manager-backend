@@ -1,12 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { group } from 'node:console';
-import { truncate } from 'node:fs';
-import { identity } from 'rxjs';
 import { addGroupByUserDto, AddUserDto } from 'src/dto/user.dto';
 import { GroupModel } from 'src/models/group.model';
 import { UserModel } from 'src/models/user.model';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {

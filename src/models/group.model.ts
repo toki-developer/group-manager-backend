@@ -36,10 +36,10 @@ export class GroupModel {
   users?: UserModel[];
 
   @Field()
-  @CreateDateColumn()
+  @CreateDateColumn({ nullable: true })
   readonly createdAt?: Date;
 
   @Field()
-  @UpdateDateColumn()
+  @UpdateDateColumn({ nullable: true })
   readonly updatedAt?: Date;
 }

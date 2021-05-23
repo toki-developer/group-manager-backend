@@ -4,18 +4,23 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 
 @ObjectType()
 @Entity('group')
+@Unique(['searchId'])
 export class GroupModel {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
   readonly id: number;
+
+  @Field()
+  @Column({ name: 'searchId' })
+  searchId: string;
 
   @Field()
   @Column({ nullable: false })
@@ -31,10 +36,10 @@ export class GroupModel {
   users?: UserModel[];
 
   @Field()
-  @CreateDateColumn()
+  @CreateDateColumn({ nullable: true })
   readonly createdAt?: Date;
 
   @Field()
-  @UpdateDateColumn()
+  @UpdateDateColumn({ nullable: true })
   readonly updatedAt?: Date;
 }

@@ -17,9 +17,15 @@ export class GroupService {
     return this.groupRepository.findOne(id);
   }
 
-  async save(id: string, group: AddGroupDto) {
-    const newgroup = await this.groupRepository.save(group);
-    this.userService.addGroupByUser({ userId: id, groupId: newgroup.id });
+  async save(userId: string, group: AddGroupDto) {
+    const nanoid = customAlphabet(
+      '1234567890abcdefghijklmnopqestuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      10,
+    );
+    const searchId = nanoid();
+    const addgroup = { ...group, searchId };
+    const newgroup = await this.groupRepository.save(addgroup);
+    this.userService.addGroupByUser({ userId, groupId: newgroup.id });
     return newgroup;
   }
 

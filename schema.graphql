@@ -20,20 +20,21 @@ type GroupModel {
   searchId: String!
   name: String!
   iconUrl: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type Query {
   user(id: String!): UserModel
   groupsByUser(id: String!): [GroupModel!]
   usersByGroup(id: Int!): [UserModel!]
-  joinGroup(searchId: String!, userId: String!): GroupModel
+  findGroup(searchId: String!): GroupModel!
 }
 
 type Mutation {
   saveUser(user: AddUserDto!): UserModel!
   addGroupByUser(affiliation: addGroupByUserDto!): UserModel!
+  joinGroup(searchId: String!, userId: String!): GroupModel
   saveGroup(group: AddGroupDto!, userId: String!): GroupModel!
   updateGroup(group: UpdateGroupDto!): GroupModel!
 }

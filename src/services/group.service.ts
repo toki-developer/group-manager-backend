@@ -4,6 +4,7 @@ import { AddGroupDto, UpdateGroupDto } from 'src/dto/group.dto';
 import { GroupModel } from 'src/models/group.model';
 import { UserService } from 'src/services/user.service';
 import { Repository } from 'typeorm';
+import { customAlphabet } from 'nanoid';
 
 @Injectable()
 export class GroupService {
@@ -13,8 +14,14 @@ export class GroupService {
     @Inject(UserService) private userService: UserService,
   ) {}
 
-  async findOne(id: number) {
-    return this.groupRepository.findOne(id);
+  async findGroup(searchId: string) {
+    return this.groupRepository.findOne({ searchId });
+  }
+
+  async joinGroup(userId: string, searchId: string) {
+    const targetGroup = await this.groupRepository.findOne({ searchId });
+    this.userService.addGroupByUser({ userId, groupId: targetGroup.id });
+    return targetGroup;
   }
 
   async save(userId: string, group: AddGroupDto) {

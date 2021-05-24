@@ -35,11 +35,11 @@ export class GroupModel {
   })
   users?: UserModel[];
 
-  @Field()
-  @CreateDateColumn({ nullable: true })
+  @Field({ nullable: true })
+  @CreateDateColumn()
   readonly createdAt?: Date;
 
-  @Field()
-  @UpdateDateColumn({ nullable: true })
+  @Field({ nullable: true })
+  @UpdateDateColumn()
   readonly updatedAt?: Date;
 }

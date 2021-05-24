@@ -14,8 +14,11 @@ export class GroupResolver {
   }
 
   @Mutation((returns) => GroupModel)
-  async saveGroup(@Args('id') id: string, @Args('group') group: AddGroupDto) {
-    return await this.groupService.save(id, group);
+  async saveGroup(
+    @Args('userId') userId: string,
+    @Args('group') group: AddGroupDto,
+  ) {
+    return await this.groupService.save(userId, group);
   }
 
   @Mutation((returns) => GroupModel)

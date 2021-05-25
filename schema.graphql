@@ -17,23 +17,25 @@ scalar DateTime
 
 type GroupModel {
   id: Int!
+  searchId: String!
   name: String!
   iconUrl: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type Query {
   user(id: String!): UserModel
   groupsByUser(id: String!): [GroupModel!]
   usersByGroup(id: Int!): [UserModel!]
-  group(id: Int!): GroupModel
+  findGroup(searchId: String!): GroupModel!
 }
 
 type Mutation {
   saveUser(user: AddUserDto!): UserModel!
   addGroupByUser(affiliation: addGroupByUserDto!): UserModel!
-  saveGroup(group: AddGroupDto!, id: String!): GroupModel!
+  joinGroup(searchId: String!, userId: String!): GroupModel
+  saveGroup(group: AddGroupDto!, userId: String!): GroupModel!
   updateGroup(group: UpdateGroupDto!): GroupModel!
 }
 

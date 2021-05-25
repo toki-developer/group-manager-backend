@@ -8,14 +8,25 @@ import { GroupService } from 'src/services/group.service';
 export class GroupResolver {
   constructor(@Inject(GroupService) private groupService: GroupService) {}
 
-  @Query((returns) => GroupModel, { nullable: true })
-  async group(@Args('id', { type: () => Int }) id: number) {
-    return await this.groupService.findOne(id);
+  @Query((returns) => GroupModel)
+  async findGroup(@Args('searchId') searchId: string) {
+    return await this.groupService.findGroup(searchId);
+  }
+
+  @Mutation((returns) => GroupModel, { nullable: true })
+  async joinGroup(
+    @Args('userId') userId: string,
+    @Args('searchId') searchId: string,
+  ) {
+    return await this.groupService.joinGroup(userId, searchId);
   }
 
   @Mutation((returns) => GroupModel)
-  async saveGroup(@Args('id') id: string, @Args('group') group: AddGroupDto) {
-    return await this.groupService.save(id, group);
+  async saveGroup(
+    @Args('userId') userId: string,
+    @Args('group') group: AddGroupDto,
+  ) {
+    return await this.groupService.save(userId, group);
   }
 
   @Mutation((returns) => GroupModel)

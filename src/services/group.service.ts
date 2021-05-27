@@ -24,6 +24,10 @@ export class GroupService {
     return targetGroup;
   }
 
+  async withdrawal(userId: string, groupId: number) {
+    return this.userService.deleteGroupByUser(userId, groupId);
+  }
+
   async save(userId: string, group: AddGroupDto) {
     const nanoid = customAlphabet(
       '1234567890abcdefghijklmnopqestuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',

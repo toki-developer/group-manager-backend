@@ -42,6 +42,17 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
+  async deleteGroupByUser(userId: string, groupId: number) {
+    const user = await this.userRepository.findOne({
+      relations: ['groups'],
+      where: { id: userId },
+    });
+    user.groups = user.groups.filter((group) => {
+      return group.id !== groupId;
+    });
+    return await this.userRepository.save(user);
+  }
+
   async findGroupByUser(id: string): Promise<GroupModel[] | null> {
     const user = await this.userRepository.findOne({
       relations: ['groups'],

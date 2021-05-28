@@ -25,7 +25,7 @@ export class GroupResolver {
   @Mutation((returns) => UserModel, { nullable: true })
   async withdrawalGroup(
     @Args('userId') userId: string,
-    @Args('groupId') groupId: number,
+    @Args('groupId', { type: () => Int }) groupId: number,
   ) {
     return await this.groupService.withdrawal(userId, groupId);
   }

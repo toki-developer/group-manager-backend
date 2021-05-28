@@ -35,7 +35,7 @@ type Mutation {
   saveUser(user: AddUserDto!): UserModel!
   addGroupByUser(affiliation: addGroupByUserDto!): UserModel!
   joinGroup(searchId: String!, userId: String!): GroupModel
-  withdrawalGroup(groupId: Float!, userId: String!): UserModel
+  withdrawalGroup(groupId: Int!, userId: String!): UserModel
   saveGroup(group: AddGroupDto!, userId: String!): GroupModel!
   updateGroup(group: UpdateGroupDto!): GroupModel!
 }

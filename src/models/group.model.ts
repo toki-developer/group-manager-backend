@@ -30,7 +30,7 @@ export class GroupModel {
   @Column({ nullable: true })
   iconUrl?: string;
 
-  @ManyToMany((type) => UserModel, (user) => user.id, {
+  @ManyToMany(() => UserModel, (user) => user.id, {
     cascade: true,
   })
   users?: UserModel[];

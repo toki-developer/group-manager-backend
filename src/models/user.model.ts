@@ -1,5 +1,4 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { IsEmail } from 'class-validator';
 import { GroupModel } from 'src/models/group.model';
 import {
   Column,
@@ -26,7 +25,7 @@ export class UserModel {
   @Column({ nullable: true })
   iconUrl?: string;
 
-  @ManyToMany((type) => GroupModel, (group) => group.id, {
+  @ManyToMany(() => GroupModel, (group) => group.id, {
     cascade: true,
   })
   @JoinTable()

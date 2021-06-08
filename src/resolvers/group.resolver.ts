@@ -22,7 +22,7 @@ export class GroupResolver {
     return await this.groupService.joinGroup(userId, searchId);
   }
 
-  @Mutation((returns) => UserModel, { nullable: true })
+  @Mutation((returns) => GroupModel, { nullable: true })
   async withdrawalGroup(
     @Args('userId') userId: string,
     @Args('groupId', { type: () => Int }) groupId: number,

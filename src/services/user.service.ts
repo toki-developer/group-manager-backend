@@ -47,10 +47,12 @@ export class UserService {
       relations: ['groups'],
       where: { id: userId },
     });
+    const deleteGroup = user.groups.find((item) => item.id == groupId);
     user.groups = user.groups.filter((group) => {
       return group.id !== groupId;
     });
-    return await this.userRepository.save(user);
+    await this.userRepository.save(user);
+    return deleteGroup;
   }
 
   async findGroupByUser(id: string): Promise<GroupModel[] | null> {

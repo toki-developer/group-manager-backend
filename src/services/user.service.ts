@@ -37,6 +37,11 @@ export class UserService {
       relations: ['groups'],
       where: { id: affiliation.userId },
     });
+    user.groups.map((group) => {
+      if (group.id == affiliation.groupId) {
+        throw 'error：Already exists';
+      }
+    });
     const group = await this.groupRepository.findOne(affiliation.groupId);
     user.groups.push(group);
     return await this.userRepository.save(user);

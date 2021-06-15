@@ -20,7 +20,7 @@ export class GroupService {
 
   async joinGroup(userId: string, searchId: string) {
     const targetGroup = await this.groupRepository.findOne({ searchId });
-    this.userService.addGroupByUser({ userId, groupId: targetGroup.id });
+    await this.userService.addGroupByUser({ userId, groupId: targetGroup.id });
     return targetGroup;
   }
 

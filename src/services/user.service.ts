@@ -75,16 +75,11 @@ export class UserService {
         user.membership[key].stateFlg = 2;
       }
     });
-    console.log(user.membership);
     await this.userRepository.save(user);
     return deleteGroup.group;
   }
 
   async findGroupByUser(id: string): Promise<MembershipModel[] | null> {
-    // const user = await this.userRepository.findOne({
-    //   relations: ['membership', 'membership.group'],
-    //   where: { id: id },
-    // });
     const user = await this.userRepository
       .createQueryBuilder('user')
       .leftJoinAndSelect('user.membership', 'membership')

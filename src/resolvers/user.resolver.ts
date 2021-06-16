@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { addGroupByUserDto, AddUserDto } from 'src/dto/user.dto';
-import { GroupModel } from 'src/models/group.model';
 import { MembershipModel } from 'src/models/membership.model';
 import { UserModel } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';

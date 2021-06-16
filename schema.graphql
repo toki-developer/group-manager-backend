@@ -54,6 +54,7 @@ input AddUserDto {
 input addGroupByUserDto {
   userId: String!
   groupId: Float!
+  stateFlg: Float!
 }
 
 input AddGroupDto {

@@ -55,7 +55,7 @@ export class UserService {
     });
     const group = await this.groupRepository.findOne(affiliation.groupId);
     const membership: MembershipModel = {
-      stateFlg: 0,
+      stateFlg: affiliation.stateFlg,
       user,
       group,
     };

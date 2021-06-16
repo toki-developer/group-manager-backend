@@ -81,14 +81,19 @@ export class UserService {
   }
 
   async findGroupByUser(id: string): Promise<MembershipModel[] | null> {
-    const user = await this.userRepository.findOne({
-      relations: ['membership', 'membership.group'],
-      where: { id: id },
-    });
-    const membership = user?.membership.filter((member) => {
-      return member.stateFlg !== 2;
-    });
-    return membership;
+    // const user = await this.userRepository.findOne({
+    //   relations: ['membership', 'membership.group'],
+    //   where: { id: id },
+    // });
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.membership', 'membership')
+      .leftJoinAndSelect('membership.group', 'group')
+      .where('user.id = :id', { id })
+      .andWhere('membership.stateFlg != 2')
+      .orderBy('membership.stateFlg', 'DESC')
+      .getOne();
+    return user.membership;
   }
 
   // async findUserByGroup(id: number): Promise<UserModel[] | null> {

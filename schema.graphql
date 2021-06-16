@@ -15,6 +15,12 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type MembershipModel {
+  stateFlg: Float!
+  user: UserModel!
+  group: GroupModel!
+}
+
 type GroupModel {
   id: Int!
   searchId: String!
@@ -26,8 +32,7 @@ type GroupModel {
 
 type Query {
   user(id: String!): UserModel
-  groupsByUser(id: String!): [GroupModel!]
-  usersByGroup(id: Int!): [UserModel!]
+  groupsByUser(id: String!): [MembershipModel!]
   findGroup(searchId: String!): GroupModel!
 }
 

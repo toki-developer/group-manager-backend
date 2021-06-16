@@ -34,8 +34,8 @@ export class GroupService {
       10,
     );
     const searchId = nanoid();
-    const addgroup = { ...group, searchId };
-    const newgroup = await this.groupRepository.save(addgroup);
+    const addgroupData = { ...group, searchId };
+    const newgroup = await this.groupRepository.save(addgroupData);
     this.userService.addGroupByUser({ userId, groupId: newgroup.id });
     return newgroup;
   }

@@ -1,10 +1,10 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { UserModel } from 'src/models/user.model';
+import { MembershipModel } from 'src/models/membership.model';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
@@ -30,10 +30,10 @@ export class GroupModel {
   @Column({ nullable: true })
   iconUrl?: string;
 
-  @ManyToMany(() => UserModel, (user) => user.id, {
+  @OneToMany(() => MembershipModel, (membership) => membership.group, {
     cascade: true,
   })
-  users?: UserModel[];
+  membership?: MembershipModel[];
 
   @Field({ nullable: true })
   @CreateDateColumn()

@@ -1,3 +1,4 @@
+import { MembershipModel } from './../models/membership.model';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { addGroupByUserDto, AddUserDto } from 'src/dto/user.dto';
@@ -34,43 +35,70 @@ export class UserService {
 
   async addGroupByUser(affiliation: addGroupByUserDto) {
     const user = await this.userRepository.findOne({
-      relations: ['groups'],
+      relations: ['membership', 'membership.group'],
       where: { id: affiliation.userId },
     });
+    // ユーザにグループがない時に{null,null}のデータが作られるので削除
+    if (!user.membership[0].group) {
+      user.membership.shift();
+    }
+
+    // 既にグループに所属してる時:エラー、stateFlgが2の時、0にする
+    user.membership.map((membership, key) => {
+      if (membership.group?.id == affiliation.groupId) {
+        if (membership.stateFlg == 2) {
+          user.membership[key].stateFlg = 0;
+        } else {
+          throw 'error：Already exists';
+        }
+      }
+    });
     const group = await this.groupRepository.findOne(affiliation.groupId);
-    user.groups.push(group);
+    const membership: MembershipModel = {
+      stateFlg: affiliation.stateFlg,
+      user,
+      group,
+    };
+    user.membership.push(membership);
     return await this.userRepository.save(user);
   }
 
   async deleteGroupByUser(userId: string, groupId: number) {
     const user = await this.userRepository.findOne({
-      relations: ['groups'],
+      relations: ['membership', 'membership.group'],
       where: { id: userId },
     });
-    const deleteGroup = user.groups.find((item) => item.id == groupId);
-    user.groups = user.groups.filter((group) => {
-      return group.id !== groupId;
+    let deleteGroup: MembershipModel;
+    user.membership.map((membership, key) => {
+      if (membership.group.id == groupId) {
+        deleteGroup = membership;
+        user.membership[key].stateFlg = 2;
+      }
     });
     await this.userRepository.save(user);
-    return deleteGroup;
+    return deleteGroup.group;
   }
 
-  async findGroupByUser(id: string): Promise<GroupModel[] | null> {
-    const user = await this.userRepository.findOne({
-      relations: ['groups'],
-      where: { id: id },
-    });
-    return user?.groups;
+  async findGroupByUser(id: string): Promise<MembershipModel[] | null> {
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.membership', 'membership')
+      .leftJoinAndSelect('membership.group', 'group')
+      .where('user.id = :id', { id })
+      .andWhere('membership.stateFlg != 2')
+      .orderBy('membership.stateFlg', 'DESC')
+      .getOne();
+    return user.membership;
   }
 
-  async findUserByGroup(id: number): Promise<UserModel[] | null> {
-    const allUsers = await this.userRepository.find({
-      relations: ['groups'],
-    });
-    const users = allUsers.filter((user) => {
-      const u = user.groups.filter((group) => group.id == id);
-      if (u.length > 0) return true;
-    });
-    return users;
-  }
+  // async findUserByGroup(id: number): Promise<UserModel[] | null> {
+  //   const allUsers = await this.userRepository.find({
+  //     relations: ['groups'],
+  //   });
+  //   const users = allUsers.filter((user) => {
+  //     const u = user.groups.filter((group) => group.id == id);
+  //     if (u.length > 0) return true;
+  //   });
+  //   return users;
+  // }
 }

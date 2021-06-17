@@ -20,7 +20,11 @@ export class GroupService {
 
   async joinGroup(userId: string, searchId: string) {
     const targetGroup = await this.groupRepository.findOne({ searchId });
-    this.userService.addGroupByUser({ userId, groupId: targetGroup.id });
+    await this.userService.addGroupByUser({
+      userId,
+      groupId: targetGroup.id,
+      stateFlg: 0,
+    });
     return targetGroup;
   }
 
@@ -34,9 +38,13 @@ export class GroupService {
       10,
     );
     const searchId = nanoid();
-    const addgroup = { ...group, searchId };
-    const newgroup = await this.groupRepository.save(addgroup);
-    this.userService.addGroupByUser({ userId, groupId: newgroup.id });
+    const addgroupData = { ...group, searchId };
+    const newgroup = await this.groupRepository.save(addgroupData);
+    this.userService.addGroupByUser({
+      userId,
+      groupId: newgroup.id,
+      stateFlg: 1,
+    });
     return newgroup;
   }
 

@@ -33,6 +33,7 @@ type GroupModel {
 type Query {
   user(id: String!): UserModel
   groupsByUser(id: String!): [MembershipModel!]
+  usersByGroup(id: Int!): [MembershipModel!]
   findGroup(searchId: String!): GroupModel!
 }
 

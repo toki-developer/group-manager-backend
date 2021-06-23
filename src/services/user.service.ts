@@ -91,14 +91,11 @@ export class UserService {
     return user.membership;
   }
 
-  // async findUserByGroup(id: number): Promise<UserModel[] | null> {
-  //   const allUsers = await this.userRepository.find({
-  //     relations: ['groups'],
-  //   });
-  //   const users = allUsers.filter((user) => {
-  //     const u = user.groups.filter((group) => group.id == id);
-  //     if (u.length > 0) return true;
-  //   });
-  //   return users;
-  // }
+  async findUserByGroup(id: number): Promise<MembershipModel[] | null> {
+    const group = await this.groupRepository.findOne({
+      relations: ['membership', 'membership.user'],
+      where: { id },
+    });
+    return group.membership;
+  }
 }

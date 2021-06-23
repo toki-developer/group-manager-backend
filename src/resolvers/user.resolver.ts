@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Int } from '@nestjs/graphql';
 import { addGroupByUserDto, AddUserDto } from 'src/dto/user.dto';
 import { MembershipModel } from 'src/models/membership.model';
 import { UserModel } from 'src/models/user.model';
@@ -29,8 +29,8 @@ export class UserResolver {
     return await this.userService.findGroupByUser(id);
   }
 
-  // @Query(() => [UserModel], { nullable: true })
-  // async usersByGroup(@Args('id', { type: () => Int }) id: number) {
-  //   return await this.userService.findUserByGroup(id);
-  // }
+  @Query(() => [MembershipModel], { nullable: true })
+  async usersByGroup(@Args('id', { type: () => Int }) id: number) {
+    return await this.userService.findUserByGroup(id);
+  }
 }

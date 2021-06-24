@@ -30,7 +30,7 @@ export class UserResolver {
   }
 
   @Query(() => [MembershipModel], { nullable: true })
-  async usersByGroup(@Args('id', { type: () => Int }) id: number) {
+  async usersByGroup(@Args('id') id: string) {
     return await this.userService.findUserByGroup(id);
   }
 }

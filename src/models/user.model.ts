@@ -8,6 +8,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { MessageModel } from 'src/models/message.model';
 
 @ObjectType()
 @Entity('user')
@@ -28,6 +29,11 @@ export class UserModel {
     cascade: true,
   })
   membership?: MembershipModel[];
+
+  @OneToMany(() => MessageModel, (message) => message.user, {
+    cascade: true,
+  })
+  message?: MessageModel[];
 
   @Field({ nullable: true })
   @CreateDateColumn()

@@ -28,7 +28,7 @@ export class GroupService {
     return targetGroup;
   }
 
-  async allowParticipation(userId: string, groupId: number) {
+  async allowParticipation(userId: string, groupId: string) {
     const membershiip = await this.userService.changeMembershipState(
       userId,
       groupId,
@@ -37,7 +37,7 @@ export class GroupService {
     return membershiip.user;
   }
 
-  async withdrawal(userId: string, groupId: number) {
+  async withdrawal(userId: string, groupId: string) {
     const membership = await this.userService.changeMembershipState(
       userId,
       groupId,

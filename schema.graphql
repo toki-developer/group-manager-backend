@@ -22,7 +22,7 @@ type MembershipModel {
 }
 
 type GroupModel {
-  id: Int!
+  id: String!
   searchId: String!
   name: String!
   iconUrl: String!
@@ -33,7 +33,7 @@ type GroupModel {
 type Query {
   user(id: String!): UserModel
   groupsByUser(id: String!): [MembershipModel!]
-  usersByGroup(id: Int!): [MembershipModel!]
+  usersByGroup(id: String!): [MembershipModel!]
   findGroup(searchId: String!): GroupModel!
 }
 
@@ -41,8 +41,8 @@ type Mutation {
   saveUser(user: AddUserDto!): UserModel!
   addGroupByUser(affiliation: addGroupByUserDto!): UserModel!
   joinGroup(searchId: String!, userId: String!): GroupModel
-  allowParticipation(groupId: Int!, userId: String!): UserModel
-  withdrawalGroup(groupId: Int!, userId: String!): GroupModel
+  allowParticipation(groupId: String!, userId: String!): UserModel
+  withdrawalGroup(groupId: String!, userId: String!): GroupModel
   saveGroup(group: AddGroupDto!, userId: String!): GroupModel!
   updateGroup(group: UpdateGroupDto!): GroupModel!
 }
@@ -55,7 +55,7 @@ input AddUserDto {
 
 input addGroupByUserDto {
   userId: String!
-  groupId: Float!
+  groupId: String!
   stateFlg: Float!
 }
 
@@ -65,7 +65,7 @@ input AddGroupDto {
 }
 
 input UpdateGroupDto {
-  id: Float!
+  id: String!
   name: String!
   iconUrl: String!
 }

@@ -63,7 +63,7 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  async changeMembershipState(userId: string, groupId: number, state: 1 | 2) {
+  async changeMembershipState(userId: string, groupId: string, state: 1 | 2) {
     const user = await this.userRepository.findOne({
       relations: ['membership', 'membership.group'],
       where: { id: userId },
@@ -91,7 +91,7 @@ export class UserService {
     return user.membership;
   }
 
-  async findUserByGroup(id: number): Promise<MembershipModel[] | null> {
+  async findUserByGroup(id: string): Promise<MembershipModel[] | null> {
     const group = await this.groupRepository.findOne({
       relations: ['membership', 'membership.user'],
       where: { id },

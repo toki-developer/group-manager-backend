@@ -15,7 +15,7 @@ export class addGroupByUserDto {
   @Field()
   userId: string;
   @Field()
-  groupId: number;
+  groupId: string;
   @Field()
   stateFlg: number;
 }

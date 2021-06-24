@@ -25,7 +25,7 @@ export class GroupResolver {
   @Mutation(() => UserModel, { nullable: true })
   async allowParticipation(
     @Args('userId') userId: string,
-    @Args('groupId', { type: () => Int }) groupId: number,
+    @Args('groupId') groupId: string,
   ) {
     return await this.groupService.allowParticipation(userId, groupId);
   }
@@ -33,7 +33,7 @@ export class GroupResolver {
   @Mutation(() => GroupModel, { nullable: true })
   async withdrawalGroup(
     @Args('userId') userId: string,
-    @Args('groupId', { type: () => Int }) groupId: number,
+    @Args('groupId') groupId: string,
   ) {
     return await this.groupService.withdrawal(userId, groupId);
   }

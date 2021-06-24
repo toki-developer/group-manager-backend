@@ -1,5 +1,6 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { MembershipModel } from 'src/models/membership.model';
+import { MessageModel } from 'src/models/message.model';
 import {
   Column,
   CreateDateColumn,
@@ -14,9 +15,9 @@ import {
 @Entity('group')
 @Unique(['searchId'])
 export class GroupModel {
-  @Field(() => Int)
-  @PrimaryGeneratedColumn()
-  readonly id: number;
+  @Field()
+  @PrimaryGeneratedColumn('uuid')
+  readonly id: string;
 
   @Field()
   @Column({ name: 'searchId' })
@@ -34,6 +35,11 @@ export class GroupModel {
     cascade: true,
   })
   membership?: MembershipModel[];
+
+  @OneToMany(() => MessageModel, (message) => message.group, {
+    cascade: true,
+  })
+  message?: MessageModel[];
 
   @Field({ nullable: true })
   @CreateDateColumn()

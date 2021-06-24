@@ -11,7 +11,7 @@ export class AddGroupDto {
 @InputType()
 export class UpdateGroupDto {
   @Field()
-  id: number;
+  id: string;
   @Field()
   name: string;
   @Field()

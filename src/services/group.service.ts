@@ -28,8 +28,22 @@ export class GroupService {
     return targetGroup;
   }
 
+  async allowParticipation(userId: string, groupId: number) {
+    const membershiip = await this.userService.changeMembershipState(
+      userId,
+      groupId,
+      1,
+    );
+    return membershiip.user;
+  }
+
   async withdrawal(userId: string, groupId: number) {
-    return this.userService.deleteGroupByUser(userId, groupId);
+    const membership = await this.userService.changeMembershipState(
+      userId,
+      groupId,
+      2,
+    );
+    return membership.group;
   }
 
   async save(userId: string, group: AddGroupDto) {

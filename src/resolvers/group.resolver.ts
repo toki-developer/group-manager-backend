@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AddGroupDto, UpdateGroupDto } from 'src/dto/group.dto';
 import { GroupModel } from 'src/models/group.model';
+import { UserModel } from 'src/models/user.model';
 import { GroupService } from 'src/services/group.service';
 
 @Resolver(() => GroupModel)
@@ -19,6 +20,14 @@ export class GroupResolver {
     @Args('searchId') searchId: string,
   ) {
     return await this.groupService.joinGroup(userId, searchId);
+  }
+
+  @Mutation(() => UserModel, { nullable: true })
+  async allowParticipation(
+    @Args('userId') userId: string,
+    @Args('groupId', { type: () => Int }) groupId: number,
+  ) {
+    return await this.groupService.allowParticipation(userId, groupId);
   }
 
   @Mutation(() => GroupModel, { nullable: true })

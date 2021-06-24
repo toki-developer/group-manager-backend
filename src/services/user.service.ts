@@ -63,7 +63,7 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  async deleteGroupByUser(userId: string, groupId: number) {
+  async changeMembershipState(userId: string, groupId: number, state: 1 | 2) {
     const user = await this.userRepository.findOne({
       relations: ['membership', 'membership.group'],
       where: { id: userId },
@@ -71,12 +71,12 @@ export class UserService {
     let deleteGroup: MembershipModel;
     user.membership.map((membership, key) => {
       if (membership.group.id == groupId) {
-        deleteGroup = membership;
-        user.membership[key].stateFlg = 2;
+        deleteGroup = { ...membership, user: user };
+        user.membership[key].stateFlg = state;
       }
     });
     await this.userRepository.save(user);
-    return deleteGroup.group;
+    return deleteGroup;
   }
 
   async findGroupByUser(id: string): Promise<MembershipModel[] | null> {
